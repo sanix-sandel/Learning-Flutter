@@ -8,6 +8,19 @@ class MyApp extends StatefulWidget {
 }
 class MyAppState extends State<MyApp> {
 
+  final List<String> _measures=[
+    'measures',
+    'kilometers',
+    'grams',
+    'kilograms',
+    'feet',
+    'miles',
+    'pounds',
+    'ounces',
+  ];
+
+  String _startMeasure;
+
   double _numberFrom;
 
   @override
@@ -19,7 +32,15 @@ class MyAppState extends State<MyApp> {
           title: Text('Measures Converter'),
         ),
         body: Center(child:Column(
-          children:[ TextField(
+          children:[
+            DropdownButton(
+            value:_startMeasure,
+            items:_measures.map((String value){
+              return DropdownMenuItem<String>(value:value, child:Text(value),);
+            }).toList(), onChanged: (value){setState((){_startMeasure=value;}); print(_startMeasure);},
+            ),
+
+            TextField(
             onChanged:(text){
               var rv=double.tryParse(text);
               if(rv != null){
@@ -29,7 +50,9 @@ class MyAppState extends State<MyApp> {
                 });
               }
             }
-          ), Text((_numberFrom==null) ? '' : _numberFrom.toString())],
+          ), Text((_numberFrom==null) ? '' : _numberFrom.toString()),
+          
+          ],
         )),
       ),
     );
