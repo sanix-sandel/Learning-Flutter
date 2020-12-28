@@ -20,8 +20,20 @@ class MyAppState extends State<MyApp> {
   ];
 
   String _startMeasure;
+  String _convertedMeasure;
 
   double _numberFrom;
+
+  final TextStyle inputStyle=TextStyle(//Text style for TextFields, 
+  //DropDownButtons and Button
+    fontSize: 20,
+    color:Colors.blue[900],
+  );
+
+  final TextStyle labelStyle=TextStyle(
+    fontSize: 24,
+    color:Colors.grey[700],
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -31,26 +43,89 @@ class MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: Text('Measures Converter'),
         ),
-        body: Center(child:Column(
-          children:[
-            DropdownButton(
-            value:_startMeasure,
-            items:_measures.map((String value){
-              return DropdownMenuItem<String>(value:value, child:Text(value),);
-            }).toList(), onChanged: (value){setState((){_startMeasure=value;}); print(_startMeasure);},
+
+        body: Container(
+          padding:EdgeInsets.symmetric(horizontal: 20),
+          child:Column(
+            children:[
+            Spacer(),
+
+            Text(
+              'Value',
+              style:labelStyle,
             ),
 
+            Spacer(),
+
             TextField(
-            onChanged:(text){
-              var rv=double.tryParse(text);
-              if(rv != null){
-                setState((){
-                  _numberFrom=rv;
-                  
-                });
+              style:inputStyle,
+              decoration: InputDecoration(
+                hintText: "Please insert the measure to be converted",
+              ),
+
+              onChanged:(text){
+                var rv=double.tryParse(text);
+                if(rv != null){
+                  setState((){
+                    _numberFrom=rv;
+                    
+                  });
+                }
               }
-            }
-          ), Text((_numberFrom==null) ? '' : _numberFrom.toString()),
+          ), 
+
+          Spacer(),
+
+          Text(
+            'From',
+            style:labelStyle,
+          ),
+
+          DropdownButton(
+              isExpanded:true,
+              value:_startMeasure,
+              style:inputStyle,
+              items:_measures.map((String value){
+                return DropdownMenuItem<String>(value:value, child:Text(value),);
+              }).toList(), onChanged: (value){setState((){_startMeasure=value;}); print(_startMeasure);},
+          ),
+
+          Spacer(),
+
+          Text(
+            'To',
+            style:labelStyle,
+          ),
+
+          Spacer(),
+
+          DropdownButton(
+              isExpanded:true,
+              value:_convertedMeasure,
+              style:inputStyle,
+
+              items:_measures.map((String value){
+                return DropdownMenuItem<String>(value:value, child:Text(value),);
+              }).toList(), 
+              
+              onChanged: (value){setState((){_convertedMeasure=value;}); print("to $_startMeasure");},
+          ),
+          
+          Spacer(flex:2,),
+
+          RaisedButton(
+            child:Text('Convert', style:inputStyle),
+            onPressed: ()=>{print("trying to convert")},
+          ),
+
+          Spacer(flex:2,),
+
+          Text(
+            (_numberFrom==null) ? '' : _numberFrom.toString(),
+            style:labelStyle
+          ), 
+
+          Spacer(flex:8,),
           
           ],
         )),
