@@ -43,9 +43,11 @@ class TimerHomePage extends StatelessWidget{
                           Padding(padding: EdgeInsets.all(defaultPadding),),
                           Expanded(child: ProductivityButton(color: Color(0xff009688),
                           text: "Work", onPressed: emptyMethod)),
+
                           Padding(padding: EdgeInsets.all(defaultPadding),),
                           Expanded(child: ProductivityButton(color: Color(0xff607D8B),
                           text: "Short Break", onPressed: emptyMethod)),
+
                           Padding(padding: EdgeInsets.all(defaultPadding),),
                           Expanded(child: ProductivityButton(color: Color(0xff455A64),
                           text: "Long Break", onPressed: emptyMethod)),
